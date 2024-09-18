@@ -1,11 +1,11 @@
 
 
-for(let i=9;i>0;i--){
+for(let i=16;i>0;i--){
     const newElement = document.createElement('div'); 
     newElement.innerHTML = `  <hr/>
     <div class="perFloor" id=${i}>
-    <button>UP</button>
-    <button>DOWN</button>
+    <button id=${i} onclick="handleMovement(${i})">UP</button>
+    <button >DOWN</button>
     <div>Floor Number: ${i}</div>
     </div>`
     ;     
@@ -18,15 +18,38 @@ for(let i=9;i>0;i--){
     
     for(let i=1;i<5;i++){
         const newElement = document.createElement('div'); 
-        newElement.innerHTML = `<h1 class="box" ></h1> `;
+        newElement.innerHTML = `<h1 class="box" id=${i} ></h1> `;
     
         const newLifts=document.querySelector('.elevators');
          
         newLifts.appendChild(newElement); 
+          
         
         }
         
+    const handleMovement=(e)=>{
+    console.log(e);
+    const lifts= document.querySelector(`.elevators`);
+    console.log(lifts);
+
+    const query = lifts.querySelector('[id="1"]');
+    console.log(query);
+    // we need to know the number of floor and not the lift so that i can move to that particular floor
+    console.log(e);  
+    query.style.transform= `translateY(-${e*110}px)`;
+    lifts.style.transition=`transform 2s ease`;
     
+     // we need to 
+     
+
+    }
+
+   
+       
+
+
+
+
     
     // if you press updown then lift moves there 
     // agar ye naya floor hai toh same will happen if these existing two are in transition 

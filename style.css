@@ -17,6 +17,7 @@ body{
       background-color: black;
       transition: transform 5s ease;
       margin-left: 100px;
+      
      
    }
    .box.move {
