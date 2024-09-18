@@ -1,0 +1,43 @@
+body{
+    display: flex;
+    flex-direction: column;
+    
+   }
+   
+   h1{
+   
+       color: green;
+   }
+   
+   
+   .box  {
+      display: flex;
+      width: 100px;
+      height: 120px;
+      background-color: black;
+      transition: transform 5s ease;
+      margin-left: 100px;
+     
+   }
+   .box.move {
+       transform: translateY(-100px); 
+   }
+   
+   button{
+      background-color: black;
+      color: white;
+       width:70px;
+   }
+   
+   .perFloor{
+     display: flex;
+    flex-direction: column;
+     height: 100px;
+   }
+   
+   .elevators{
+     display: flex;
+     white-space: nowrap;
+     align-items: baseline;
+     margin-top: -130px;
+   }
