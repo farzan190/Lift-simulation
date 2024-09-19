@@ -1,11 +1,13 @@
-
-
+const handleLogicperLift=0
+let number=1;
 for(let i=16;i>0;i--){
     const newElement = document.createElement('div'); 
-    newElement.innerHTML = `  <hr/>
+    newElement.innerHTML = ` 
     <div class="perFloor" id=${i}>
-    <button id=${i} onclick="handleMovement(${i})">UP</button>
-    <button >DOWN</button>
+   
+    <button id=${i} class="upButton" onclick="handleMovement(${i})">UP</button>
+    
+    <button class="downButton" onclick="handleMovement(${i})">DOWN</button>
     <div>Floor Number: ${i}</div>
     </div>`
     ;     
@@ -29,26 +31,22 @@ for(let i=16;i>0;i--){
         
     const handleMovement=(e)=>{
     console.log(e);
+     if(number>4)
+        number=1;
     const lifts= document.querySelector(`.elevators`);
-    console.log(lifts);
 
-    const query = lifts.querySelector('[id="1"]');
-    console.log(query);
-    // we need to know the number of floor and not the lift so that i can move to that particular floor
-    console.log(e);  
-    query.style.transform= `translateY(-${e*110}px)`;
-    lifts.style.transition=`transform 2s ease`;
+    const query = lifts.querySelector(`[id="${number}"]`);
     
-     // we need to 
+    query.style.transform= `translateY(-${e*100}px)`;
+    query.style.transition=`transform 2s ease`;
+    
+    number++;
      
 
     }
 
    
-       
-
-
-
+   
 
     
     // if you press updown then lift moves there 
