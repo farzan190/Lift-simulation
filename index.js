@@ -4,6 +4,7 @@ let number = 1;
 let count = 0;
 let finalLever = 5665;
 let nearestLiftIndex = -1;
+let lastLift=1;
 
 liftState = [];
 [...Array(4)].forEach((e, index) => {
@@ -38,32 +39,45 @@ for (let i = 1; i < 5; i++) {
 }
 
 const handleMovement = (floorcalled, buttonPressed) => {
-    if (number > 4) number = 1;
+    if (number > 4)
+         number = 1;
 
     for (let i = 0; i < liftState.length; i++) {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
             return;
         }
+        
     }
 
+    
+    const desiredElevator =nearestElevator(floorcalled,buttonPressed);
+   // console.log(`nearest elevator number  ${desiredElevator} `);  
+
     const lifts = document.querySelector(`.elevators`);
-    const singleLift = lifts.querySelector(`[id="${number}"]`);
-    const currentLiftNumber = number; // Capture the current lift number
+    const singleLift = lifts.querySelector(`[id="${desiredElevator}"]`);
+    const currentLiftNumber = desiredElevator; 
 
     singleLift.addEventListener('click', liftMovementTrack(currentLiftNumber, "moving", floorcalled, `${buttonPressed}`));
 
     singleLift.style.transform = `translateY(-${floorcalled * 100}px)`;
     singleLift.style.transition = `transform 2s ease`;
 
-    // Capture the current lift number inside the timeout
     setTimeout(() => {
         liftMovementTrack(currentLiftNumber, "idle", floorcalled, `${buttonPressed}`);
     }, 2000);
+     
+   
 
-    number++;
+     if(lastLift!=currentLiftNumber){
+        number++;
+    }
+               
+    lastLift=currentLiftNumber;
+    console.log(lastLift)
 };
 
 const liftMovementTrack = (liftnumber, state, currentFloor, buttonPressed) => {
+    console.log(`updating for lift number ${liftnumber}`);
     const updatedLift = liftState.map((lift) => {
         if (lift.id === liftnumber) {
             return {
@@ -78,3 +92,21 @@ const liftMovementTrack = (liftnumber, state, currentFloor, buttonPressed) => {
     liftState = updatedLift;
     console.log(updatedLift);
 };
+
+
+const nearestElevator=(floorcalled,buttonPressed)=>{
+
+    let nearestLift = null;
+    let minDistance = 1000;
+    for (let i = 0; i < liftState.length; i++) {
+        
+        const distance = Math.abs(liftState[i].currentFloor - floorcalled);
+     
+         if(distance<minDistance){
+            minDistance=distance;
+            nearestLift=i+1;
+         }
+        
+    }
+   return nearestLift;
+}
