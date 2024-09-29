@@ -46,8 +46,7 @@ const handleMovement = (floorcalled, buttonPressed) => {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
             return;
         }
-        if (liftState[i].currentFloor === floorcalled && liftState[i].state =="moving")
-            return ;
+        
     }
 
     
