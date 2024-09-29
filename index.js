@@ -46,7 +46,8 @@ const handleMovement = (floorcalled, buttonPressed) => {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
             return;
         }
-        
+        if (liftState[i].currentFloor === floorcalled && liftState[i].state =="moving")
+            return ;
     }
 
     
@@ -67,13 +68,8 @@ const handleMovement = (floorcalled, buttonPressed) => {
     }, 2000);
      
    
-
-     if(lastLift!=currentLiftNumber){
-        number++;
-    }
-               
-    lastLift=currentLiftNumber;
-    console.log(lastLift)
+      
+    
 };
 
 const liftMovementTrack = (liftnumber, state, currentFloor, buttonPressed) => {
@@ -99,14 +95,15 @@ const nearestElevator=(floorcalled,buttonPressed)=>{
     let nearestLift = null;
     let minDistance = 1000;
     for (let i = 0; i < liftState.length; i++) {
-        
+        if (liftState[i].state=="idle"){
         const distance = Math.abs(liftState[i].currentFloor - floorcalled);
      
          if(distance<minDistance){
             minDistance=distance;
             nearestLift=i+1;
          }
-        
+         
+        }
     }
    return nearestLift;
 }
