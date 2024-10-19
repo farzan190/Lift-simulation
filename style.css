@@ -1,16 +1,25 @@
 
   
    
-   .box  {
+   .box  { 
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100px;
       height: 100px;
       background-color: black;
       margin-left: 100px;
-      
-     
    }
-   
-   
+   .left{
+    width: 0px;
+    height: 100px;
+    color: aliceblue;
+    background-color: wheat;
+    transition: width 3s ease;
+   }
+   .expand {
+    width: 0px;  
+  }
    button{
       background-color: black;
       color: white;
@@ -23,6 +32,7 @@
      height: 100px;
    }
    
+
    .elevators{
      display: flex;
      white-space: nowrap;
@@ -33,3 +43,5 @@
      height: 120px;   
 
    }
+
+   

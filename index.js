@@ -26,6 +26,7 @@ for (let i = 16; i > 0; i--) {
     
     <button class="downButton" onclick="handleMovement(${i},'downButton')">DOWN</button>
     <div>Floor Number: ${i}</div>
+    <div classname="line"></div>
     </div>`;
     const newFloors = document.querySelector('.space');
     newFloors.appendChild(newElement);
@@ -33,7 +34,7 @@ for (let i = 16; i > 0; i--) {
 
 for (let i = 1; i < 5; i++) {
     const newElement = document.createElement('div');
-    newElement.innerHTML = `<h1 class="box" id=${i}></h1>`;
+    newElement.innerHTML = `<div class="box" id=${i}><div class="left"></div></div>`;
     const newLifts = document.querySelector('.elevators');
     newLifts.appendChild(newElement);
 }
@@ -44,12 +45,14 @@ const handleMovement = (floorcalled, buttonPressed) => {
 
     for (let i = 0; i < liftState.length; i++) {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
+            liftOpen();
+            setTimeout(liftClose,3000);
             return;
         }
         
     }
 
-    
+
     const desiredElevator =nearestElevator(floorcalled,buttonPressed);
    // console.log(`nearest elevator number  ${desiredElevator} `);  
 
@@ -105,4 +108,17 @@ const nearestElevator=(floorcalled,buttonPressed)=>{
         }
     }
    return nearestLift;
+}
+
+const liftOpen=()=>{
+   
+    const opendoor=document.querySelector('.left');
+   opendoor.style.width='99px';
+
+}
+const liftClose=()=>{
+   
+    const opendoor=document.querySelector('.left');
+   opendoor.style.width='0px';
+
 }
