@@ -5,6 +5,7 @@ let count = 0;
 let finalLever = 5665;
 let nearestLiftIndex = -1;
 let lastLift=1;
+let i=0;
 
 liftState = [];
 [...Array(4)].forEach((e, index) => {
@@ -45,28 +46,33 @@ const handleMovement = (floorcalled, buttonPressed) => {
 
     for (let i = 0; i < liftState.length; i++) {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
-            liftOpen();
-            setTimeout(liftClose,3000);
+            liftMovementTrack(i+1, "moving", floorcalled, `${buttonPressed}`)
+            setTimeout(() => {
+                liftMovementTrack(i+1, "idle", floorcalled, `${buttonPressed}`);
+            }, 2000);
             return;
         }
         
-    }
 
+    }
+    
 
     const desiredElevator =nearestElevator(floorcalled,buttonPressed);
-   // console.log(`nearest elevator number  ${desiredElevator} `);  
+   
 
     const lifts = document.querySelector(`.elevators`);
     const singleLift = lifts.querySelector(`[id="${desiredElevator}"]`);
     const currentLiftNumber = desiredElevator; 
-
+      
     singleLift.addEventListener('click', liftMovementTrack(currentLiftNumber, "moving", floorcalled, `${buttonPressed}`));
 
     singleLift.style.transform = `translateY(-${floorcalled * 100}px)`;
     singleLift.style.transition = `transform 2s ease`;
-
+    
     setTimeout(() => {
         liftMovementTrack(currentLiftNumber, "idle", floorcalled, `${buttonPressed}`);
+        liftOpen();
+        setTimeout(liftClose,2000);
     }, 2000);
      
    
@@ -110,15 +116,17 @@ const nearestElevator=(floorcalled,buttonPressed)=>{
    return nearestLift;
 }
 
-const liftOpen=()=>{
-   
-    const opendoor=document.querySelector('.left');
-   opendoor.style.width='99px';
 
+
+
+const liftOpen=()=>{
+    const opendoor=document.querySelectorAll('.left');
+    opendoor[i].style.width='99px';
 }
 const liftClose=()=>{
-   
     const opendoor=document.querySelector('.left');
-   opendoor.style.width='0px';
-
+   opendoor.style.width='1px';
+   
 }
+
+// if a lift is in moving state and it moves to idle state  then please do open and close the gate 
