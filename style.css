@@ -41,7 +41,12 @@
 
    .single-floor{
      height: 120px;   
-
    }
 
+   .line{
+    height: 4px;
+    width: 1000px;
+    color: blue;
+    z-index: +2;
+   }
    

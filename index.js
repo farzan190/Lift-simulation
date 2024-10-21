@@ -27,7 +27,7 @@ for (let i = 16; i > 0; i--) {
     
     <button class="downButton" onclick="handleMovement(${i},'downButton')">DOWN</button>
     <div>Floor Number: ${i}</div>
-    <div classname="line"></div>
+    <div class="line"></div>
     </div>`;
     const newFloors = document.querySelector('.space');
     newFloors.appendChild(newElement);
@@ -47,8 +47,10 @@ const handleMovement = (floorcalled, buttonPressed) => {
     for (let i = 0; i < liftState.length; i++) {
         if (liftState[i].currentFloor === floorcalled && liftState[i].direction === buttonPressed) {
             liftMovementTrack(i+1, "moving", floorcalled, `${buttonPressed}`)
+            liftOpen(i+1);
             setTimeout(() => {
                 liftMovementTrack(i+1, "idle", floorcalled, `${buttonPressed}`);
+                liftClose(i+1);
             }, 2000);
             return;
         }
@@ -58,8 +60,6 @@ const handleMovement = (floorcalled, buttonPressed) => {
     
 
     const desiredElevator =nearestElevator(floorcalled,buttonPressed);
-   
-
     const lifts = document.querySelector(`.elevators`);
     const singleLift = lifts.querySelector(`[id="${desiredElevator}"]`);
     const currentLiftNumber = desiredElevator; 
@@ -69,14 +69,14 @@ const handleMovement = (floorcalled, buttonPressed) => {
     singleLift.style.transform = `translateY(-${floorcalled * 100}px)`;
     singleLift.style.transition = `transform 2s ease`;
     
+    
     setTimeout(() => {
         liftMovementTrack(currentLiftNumber, "idle", floorcalled, `${buttonPressed}`);
-        liftOpen();
-        setTimeout(liftClose,2000);
+        liftOpen(currentLiftNumber);
+        setTimeout(()=>{
+            liftClose(currentLiftNumber)
+        },2000);
     }, 2000);
-     
-   
-      
     
 };
 
@@ -119,14 +119,15 @@ const nearestElevator=(floorcalled,buttonPressed)=>{
 
 
 
-const liftOpen=()=>{
+const liftOpen=(currentLiftNumber)=>{
+    console.log(currentLiftNumber);
     const opendoor=document.querySelectorAll('.left');
-    opendoor[i].style.width='99px';
+    opendoor[currentLiftNumber-1].style.width='99px';
 }
-const liftClose=()=>{
-    const opendoor=document.querySelector('.left');
-   opendoor.style.width='1px';
+const liftClose=(currentLiftNumber)=>{
+    console.log(currentLiftNumber);
+    const opendoor=document.querySelectorAll('.left');
+    opendoor[currentLiftNumber-1].style.width='1px';
    
 }
 
-// if a lift is in moving state and it moves to idle state  then please do open and close the gate 
