@@ -6,42 +6,10 @@ let finalLever = 5665;
 let nearestLiftIndex = -1;
 let lastLift=1;
 let i=0;
-
-liftState = [];
-[...Array(4)].forEach((e, index) => {
-    const eachliftDetail = {
-        id: index + 1,
-        state: "idle",
-        currentFloor: 0,
-        direction: "",
-    };
-    liftState.push(eachliftDetail);
-});
-
-for (let i = 16; i > 0; i--) {
-    const newElement = document.createElement('div');
-    newElement.innerHTML = `
-    <div class="perFloor" id=${i}>
-   
-    <button id=${i} class="upButton" onclick="handleMovement(${i},'upButton')">UP</button>
-    
-    <button class="downButton" onclick="handleMovement(${i},'downButton')">DOWN</button>
-    <div>Floor Number: ${i}</div>
-    <div class="line"></div>
-    </div>`;
-    const newFloors = document.querySelector('.space');
-    newFloors.appendChild(newElement);
-}
-
-for (let i = 1; i < 5; i++) {
-    const newElement = document.createElement('div');
-    newElement.innerHTML = `<div class="box" id=${i}><div class="left"></div></div>`;
-    const newLifts = document.querySelector('.elevators');
-    newLifts.appendChild(newElement);
-}
+let totalLifts=0,totalFloors=0;
 
 const handleMovement = (floorcalled, buttonPressed) => {
-    if (number > 4)
+    if (number > totalLifts)
          number = 1;
 
     for (let i = 0; i < liftState.length; i++) {
@@ -57,7 +25,6 @@ const handleMovement = (floorcalled, buttonPressed) => {
         
 
     }
-    
 
     const desiredElevator =nearestElevator(floorcalled,buttonPressed);
     const lifts = document.querySelector(`.elevators`);
@@ -117,13 +84,12 @@ const nearestElevator=(floorcalled,buttonPressed)=>{
 }
 
 
-
-
 const liftOpen=(currentLiftNumber)=>{
     console.log(currentLiftNumber);
     const opendoor=document.querySelectorAll('.left');
     opendoor[currentLiftNumber-1].style.width='99px';
 }
+
 const liftClose=(currentLiftNumber)=>{
     console.log(currentLiftNumber);
     const opendoor=document.querySelectorAll('.left');
@@ -131,3 +97,42 @@ const liftClose=(currentLiftNumber)=>{
    
 }
 
+
+document.getElementById("liftForm").onsubmit = function(event) {
+    event.preventDefault();
+    const numLifts = document.querySelector(".NofLifts").value;
+    const numFloors = document.querySelector(".NofFloors").value;
+    totalLifts = parseInt(numLifts, 10);
+    totalFloors =parseInt(numFloors, 10);
+
+    [...Array(totalLifts)].forEach((e, index) => {
+        const eachliftDetail = {
+            id: index + 1,
+            state: "idle",
+            currentFloor: 0,
+            direction: "",
+        };
+        liftState.push(eachliftDetail);
+    });
+    
+
+    const newFloors = document.querySelector('.space');
+    for (let i = numFloors; i > 0; i--) {
+        const newElement = document.createElement('div');
+        newElement.innerHTML = `
+            <div class="perFloor" id=${i}>
+                <button id=${i} class="upButton" onclick="handleMovement(${i},'upButton')">UP</button>
+                <button class="downButton" onclick="handleMovement(${i},'downButton')">DOWN</button>
+                <div>Floor Number: ${i}</div>
+                <div class="line"></div>
+            </div>`;
+        newFloors.appendChild(newElement);
+    }
+
+    const newLifts = document.querySelector('.elevators');
+    for (let i = 1; i <= totalLifts; i++) {
+        const newElement = document.createElement('div');
+        newElement.innerHTML = `<div class="box" id=${i}><div class="left"></div></div>`;
+        newLifts.appendChild(newElement);
+    }
+};

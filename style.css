@@ -45,8 +45,10 @@
 
    .line{
     height: 4px;
-    width: 1000px;
-    color: blue;
+    width: 100%;
+    overflow-x: auto;
+    background-color: black;
+    margin-top: 14px;
     z-index: +2;
    }
    
