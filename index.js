@@ -8,6 +8,8 @@ let lastLift=1;
 let i=0;
 let totalLifts=0,totalFloors=0;
 
+
+
 const handleMovement = (floorcalled, buttonPressed) => {
     if (number > totalLifts)
          number = 1;
@@ -99,6 +101,9 @@ const liftClose=(currentLiftNumber)=>{
 
 
 document.getElementById("liftForm").onsubmit = function(event) {
+    if(count>0)
+        return;
+    count++;
     event.preventDefault();
     const numLifts = document.querySelector(".NofLifts").value;
     const numFloors = document.querySelector(".NofFloors").value;
